@@ -4,7 +4,10 @@ import argparse
 
 
 def single_email2latex(latex_from, latex_to, latex_subject, latex_date, latex_content):
-    latex_content = latex_content.replace("\n", "\\\\\n")
+    latex_content = latex_content.strip()
+    latex_content = latex_content.replace("\r", "")
+    latex_content = latex_content.replace("\n", "\\\\")
+    latex_content = latex_content.replace("_", "\\_")
 
     return (
         "\\begin{tabularx}{\\linewidth}{rX}\n"
@@ -21,12 +24,11 @@ def single_email2latex(latex_from, latex_to, latex_subject, latex_date, latex_co
         "\t\\rowcolor{light_color}\n"
         f"\t\\texttt{{Subject}} & {latex_subject} \\\\\n"
         "\t\\hline\n"
-        "\end{tabularx}\n"
-        "\\vspace{1em}\n"
-        "{\\centering\\par\\noindent\\rule{0.9\\textwidth}{0.5pt}\\\\[0.5em]\n}"
-        "\n"
-        f"{latex_content.strip()}\n"
-        "\\par\\noindent\\rule{\\textwidth}{1.5pt}\\\\[3.5em]\n"
+        "\\end{tabularx}\n"
+        "\\vspace{0.5em}\n"
+        "{\\centering\\par\\noindent\\rule{0.9\\textwidth}{0.5pt}\\\\[0.5em]}\n\n"
+        f"{latex_content}\n\n"
+        "\\par\\noindent\\rule{\\textwidth}{1.5pt}\\\\[1.5em]\n"
     )
 
 
@@ -43,9 +45,11 @@ def mail2latex(emails, light_color="eef7ff", dark_color="d3ebff"):
         "\\usepackage[dvipsnames]{xcolor}\n"
         "\\usepackage{tabularx, colortbl, makecell}\n"
         "\\usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}\n"
-        f"\\definecolor{{light_color}}{{HTML}}{light_color}\n"
-        f"\\definecolor{{dark_color}}{{HTML}}{dark_color}\n"
-        "\\setlength{\parindent}{0cm}\n\n"
+        "\\usepackage[utf8]{inputenc}\n"
+        "\\usepackage[T1]{fontenc}\n"
+        f"\\definecolor{{light_color}}{{HTML}}{{{light_color}}}\n"
+        f"\\definecolor{{dark_color}}{{HTML}}{{{dark_color}}}\n"
+        "\\setlength{\\parindent}{0cm}\n\n"
         "\\begin{document}\n\n"
     )
 
