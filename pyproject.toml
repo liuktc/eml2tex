@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "eml2tex"
+version = "0.1.0"
+description = ""
+authors = ["Luca <luca24ever@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fast-mail-parser = "^0.2.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
